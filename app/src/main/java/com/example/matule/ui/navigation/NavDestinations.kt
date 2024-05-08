@@ -8,4 +8,5 @@ object NavDestinations {
     const val Signup = "Signup"
     const val Home = "Home"
     const val ForgotPassword = "ForgotPassword"
+    const val Verification = "Verification"
 }
