@@ -2,11 +2,13 @@ package com.example.matule.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
 
 @Serializable
-data class ProfileDto(
+data class CartDto(
+    val id: Int = 0,
     @SerialName("user_id")
-    val id: String,
-    val name: String
+    val userId: String,
+    @SerialName("shoe_id")
+    val shoeId: Int,
+    val count: Int
 )

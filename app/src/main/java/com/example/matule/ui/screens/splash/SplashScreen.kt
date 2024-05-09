@@ -2,6 +2,7 @@ package com.example.matule.ui.screens.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
@@ -38,18 +39,21 @@ fun SplashScreen(navController: NavController, viewModel: SplashViewModel = hilt
             .background(Brush.verticalGradient(listOf(colorScheme.primary, colorScheme.secondary))),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = buildAnnotatedString {
-            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                append("MATULE")
-            }
-            withStyle(
-                SpanStyle(
-                    fontWeight = FontWeight.Light,
-                    baselineShift = BaselineShift.Superscript
-                )
-            ) {
-                append("ME")
-            }
-        }, fontSize = 65.sp, color = colorScheme.onPrimary)
+        Row {
+            Text(
+                text = "MATULE",
+                fontSize = 65.sp,
+                fontWeight = FontWeight.Bold,
+                color = colorScheme.onPrimary,
+                lineHeight = 65.sp
+            )
+            Text(
+                text = "ME",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Light,
+                color = colorScheme.onPrimary,
+                lineHeight = 32.sp
+            )
+        }
     }
 }

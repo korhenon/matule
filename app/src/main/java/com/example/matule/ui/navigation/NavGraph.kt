@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.matule.ui.screens.forgotpassword.ForgotPasswordScreen
+import com.example.matule.ui.screens.home.HomeScreen
 import com.example.matule.ui.screens.login.LoginScreen
 import com.example.matule.ui.screens.signup.SignupScreen
 import com.example.matule.ui.screens.splash.SplashScreen
@@ -33,7 +34,7 @@ fun NavGraph(verificationViewModel: VerificationViewModel = hiltViewModel()) {
             VerificationScreen(navController, verificationViewModel)
         }
         composable(NavDestinations.Home) {
-
+            HomeScreen(navController)
         }
     }
 }

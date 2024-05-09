@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -33,43 +34,46 @@ fun ForgotPasswordScreen(
     verificationViewModel: VerificationViewModel,
     viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
-    Column {
-        IconButton(onClick = { navController.popBackStack() }) {
-            Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "")
-        }
-        Text(text = "Забыл пароль")
-        Text(text = "Введите свою учетную запись для сброса")
-        TextField(
-            value = viewModel.state.email,
-            onValueChange = { viewModel.state = viewModel.state.copy(email = it) }
+    val modifier = if (viewModel.state.isModalOpen) Modifier
+        .blur(4.dp)
+        .background(Color(0x40000000))
+        .clickable {
+            verificationViewModel.state = verificationViewModel.state.copy(email = viewModel.state.email)
+            navController.navigate(NavDestinations.Verification) } else Modifier
+    Box(
+        modifier.fillMaxSize()
+    ) {
+        Column {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "")
+            }
+            Text(text = "Забыл пароль")
+            Text(text = "Введите свою учетную запись для сброса")
+            TextField(
+                value = viewModel.state.email,
+                onValueChange = { viewModel.state = viewModel.state.copy(email = it) }
 
-        )
-        Button(onClick = {
-            viewModel.sendOtp()
-        }) {
-            Text(text = "Отправить")
+            )
+            Button(onClick = {
+                viewModel.sendOtp()
+            }) {
+                Text(text = "Отправить")
+            }
         }
     }
     if (viewModel.state.isModalOpen) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .blur(4.dp),
-            contentAlignment = Alignment.Center
-        ) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(colorScheme.background, RoundedCornerShape(16.dp))
-                    .clickable {
-                        verificationViewModel.state = verificationViewModel.state.copy(email = viewModel.state.email)
-                        navController.navigate(NavDestinations.Verification)
-                    }
+                    .padding(horizontal = 20.dp)
+                    .background(colorScheme.background)
             ) {
                 Text(text = "Проверьте Ваш Email")
                 Text(text = "Мы отправили код восстановления пароля на вашу электронную почту.")
             }
         }
     }
+
+
 }

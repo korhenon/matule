@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.matule.data.remote.AuthService
+import com.example.matule.data.utils.generatePassword
+import com.example.matule.ui.navigation.NavDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,9 +28,26 @@ class VerificationViewModel @Inject constructor(
 
     fun checkOtp() {
         viewModelScope.launch {
-            if (authService.checkOtp(state.email, state.values.joinToString())) {
+            state = state.copy(
+                checkResult = authService.checkOtp(
+                    state.email,
+                    state.values.joinToString("")
+                )
+            )
+        }
+    }
 
-            }
+    fun generatePassword() {
+        state = state.copy(
+            password = state.phrase.generatePassword(),
+            creatingPasswordState = CreatingPasswordState.Password
+        )
+    }
+
+    fun changePassword(navController: NavController) {
+        viewModelScope.launch {
+            authService.changePassword(state.password)
+            navController.navigate(NavDestinations.Home)
         }
     }
 }
