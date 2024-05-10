@@ -1,7 +1,5 @@
 package com.example.matule.ui.navigation
 
-import android.window.SplashScreen
-
 object NavDestinations {
     const val Splash = "Splash"
     const val Login = "Login"
@@ -9,4 +7,8 @@ object NavDestinations {
     const val Home = "Home"
     const val ForgotPassword = "ForgotPassword"
     const val Verification = "Verification"
+    const val Listing = "Listing"
+    const val Popular = "Popular"
+    const val Details = "Details"
+    const val Favorites = "Favorites"
 }

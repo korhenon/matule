@@ -1,7 +1,7 @@
 package com.example.matule.ui.screens.home
 
-import com.example.matule.data.model.ShoeDto
+import com.example.matule.data.model.Shoe
 
 data class HomeState(
-    val shoes: List<ShoeDto> = listOf()
+    val shoes: Map<String, List<Shoe>> = mapOf()
 )

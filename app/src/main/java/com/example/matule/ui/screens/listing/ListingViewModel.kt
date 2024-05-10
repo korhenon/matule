@@ -1,4 +1,4 @@
-package com.example.matule.ui.screens.home
+package com.example.matule.ui.screens.listing
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,25 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ListingViewModel @Inject constructor(
     private val repository: ShoesRepository
 ): ViewModel() {
-    var state by mutableStateOf(HomeState())
-    val allShoes: List<Shoe> get() {
-        val shoes = mutableListOf<Shoe>()
-        for (list in state.shoes.values) {
-            for (shoe in list) {
-                shoes.add(shoe)
-            }
-        }
-        return shoes
-    }
-    fun load() {
-        viewModelScope.launch {
-            state = state.copy(shoes = repository.getShoesByCategories())
-        }
-    }
-
     fun toggleFavorite(shoe: Shoe) {
         viewModelScope.launch {
             repository.toggleFavorite(shoe)
@@ -47,5 +31,16 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.service.addToCart(shoe.id)
         }
+    }
+
+    var state by mutableStateOf(ListingState())
+    val allShoes: List<Shoe> get() {
+        val shoes = mutableListOf<Shoe>()
+        for (list in state.shoes.values) {
+            for (shoe in list) {
+                shoes.add(shoe)
+            }
+        }
+        return shoes
     }
 }
